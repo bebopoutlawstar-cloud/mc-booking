@@ -1,0 +1,17 @@
+module.exports = [
+  { name: "Acting Reel", category: "Reels", turnaround: "5 days", description: "Cut of your best on-screen moments for casting directors and agents" },
+  { name: "Singing Reel", category: "Reels", turnaround: "3 days", description: "Short vertical performance edit for Instagram/TikTok with clean audio sync" },
+  { name: "Short Videos", category: "Short-form", turnaround: "3 days", description: "Quick social clips, ads or recaps cut for Reels, TikTok and Shorts" },
+  { name: "Movie Trailer", category: "Trailers", turnaround: "7 days", description: "Cinematic trailer cut from your footage, with music, pacing and title cards" },
+  { name: "Video Game Trailer", category: "Trailers", turnaround: "7 days", description: "Hype trailer for a game or mod, built from gameplay and cinematics" },
+  { name: "Gameplay Editing", category: "Gaming", turnaround: "3 days", description: "Raw gameplay turned into a paced YouTube video with cuts, zooms and captions" },
+  { name: "Fluff Piece", category: "Promo", turnaround: "5 days", description: "Feel-good feature or promo video for a person, business or event" },
+  { name: "Documentary", category: "Long-form", turnaround: "21 days", description: "Story-driven long-form edit from interviews and B-roll" },
+  { name: "Movie Editing", category: "Long-form", turnaround: "30 days", description: "Full edit of a short or feature film: assembly, story cut, sound and color pass" },
+  { name: "Wedding Photo Editing", category: "Weddings", turnaround: "7 days", description: "Color-corrected, retouched wedding photo set" },
+  { name: "Wedding Filming", category: "Weddings", turnaround: "14 days", description: "On-site wedding coverage plus an edited highlight film" },
+  { name: "Voice Acting", category: "Audio", turnaround: "3 days", description: "Recorded voice-over or character lines for videos, games or ads" },
+  { name: "Podcast Editing", category: "Audio", turnaround: "2 days", description: "Cleaned-up audio and/or video podcast with cuts, levels and intro/outro" },
+  { name: "Motion Graphics", category: "Design", turnaround: "5 days", description: "Animated titles, lower thirds, logo reveals or explainer graphics" },
+  { name: "Camera & Editing Advice", category: "Consulting", turnaround: "1-hour session", description: "One-on-one session on gear, shooting or editing technique" },
+];

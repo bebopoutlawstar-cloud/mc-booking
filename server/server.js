@@ -14,6 +14,8 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "MC Productions API is running" });
 });
 
+app.use("/api/services", require("./routes/serviceRoutes"));
+
 mongoose
   .connect(MONGO_URI)
   .then(() => {
