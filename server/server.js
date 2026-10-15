@@ -15,6 +15,8 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/services", require("./routes/serviceRoutes"));
+app.use("/api/auth", require("./routes/authRoutes"));
+
 
 mongoose
   .connect(MONGO_URI)
