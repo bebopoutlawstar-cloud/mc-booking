@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const serviceSchema = new mongoose.Schema(
   {
     name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+  type: String,
+  required: true,
+  trim: true,
+},
     category: {
       type: String,
       required: true,
