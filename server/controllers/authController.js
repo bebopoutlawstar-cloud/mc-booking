@@ -7,7 +7,7 @@ function createToken(user) {
   });
 }
 
-exports.register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -30,3 +30,35 @@ exports.register = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 2. If either one is missing, send status 400 with a message
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    // 3. Find the user by email (hint: User.findOne, and lowercase the email)
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    // 4. If there's no user, OR matchPassword(password) is false,
+    //    send status 401 with "Invalid email or password"
+    //    (hint: matchPassword is async, so it needs await)
+    if (!user || !(await user.matchPassword(password))) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // 5. Send back a token and the user's details,
+    //    in the same shape as your register response
+    res.json({
+      token: createToken(user),
+      user: { id: user._id, name: user.name, email: user.email, role: user.role },
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { register, login };
