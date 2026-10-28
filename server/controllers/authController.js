@@ -60,5 +60,8 @@ const login = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+const me = async (req, res) => {
+  res.json({ user: req.user });
+};
 
-module.exports = { register, login };
+module.exports = { register, login, me };
