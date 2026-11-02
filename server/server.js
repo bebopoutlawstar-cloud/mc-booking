@@ -9,6 +9,7 @@ const MONGO_URI = process.env.MONGO_URI;
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/bookings", require("./routes/bookingRoutes"));
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "MC Productions API is running" });
@@ -16,7 +17,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/services", require("./routes/serviceRoutes"));
 app.use("/api/auth", require("./routes/authRoutes"));
-
+app.use("/api/bookings", require("./routes/bookingRoutes"));
 
 mongoose
   .connect(MONGO_URI)
