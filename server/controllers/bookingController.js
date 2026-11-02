@@ -56,4 +56,35 @@ const getMyBookings = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getMyBookings };
+const cancelBooking = async (req, res) => {
+  try {
+    // 1. Find the booking by the ID in the URL
+    //    (hint: Booking.findById(req.params.id))
+    //    If not found, send 404 "Booking not found"
+const booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    // 2. Make sure it belongs to the logged-in user
+    //    (hint: booking.user.toString() !== req.user._id.toString())
+    //    If it's someone else's, send 403 "Not your booking"
+const isOwner = booking.user.toString() === req.user._id.toString();
+    if (!isOwner) {
+      return res.status(403).json({ message: "Not your booking" });
+    }
+    // 3. If it's already "cancelled" or "declined", send 400 "Booking is already closed"
+    if (booking.status === "cancelled" || booking.status === "declined") {
+      return res.status(400).json({ message: "Booking is already closed" });
+    }
+    // 4. Set booking.status = "cancelled", then await booking.save()
+    booking.status = "cancelled";
+    await booking.save();
+
+    // 5. Send it back with res.json(booking)
+  res.json(booking);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createBooking, getMyBookings, cancelBooking };
