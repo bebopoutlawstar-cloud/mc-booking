@@ -40,4 +40,20 @@ const createBooking = async (req, res) => {
   }
 };
 
-module.exports = { createBooking };
+const getMyBookings = async (req, res) => {
+  try {
+    // 1. Find bookings where user matches req.user._id
+    const bookings = await Booking.find({ user: req.user._id })
+      // 2. .populate("service") so each booking shows the service name, not just an ID
+      .populate("service")
+      // 3. .sort({ dateTime: 1 }) so the soonest chat comes first
+      .sort({ dateTime: 1 });
+
+    // 4. Send them back with res.json(...)
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createBooking, getMyBookings };
