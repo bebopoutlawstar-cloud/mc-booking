@@ -27,6 +27,8 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    priceMin: { type: Number },
+priceMax: { type: Number },
     description: {
       type: String,
       required: true,

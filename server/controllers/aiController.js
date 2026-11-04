@@ -2,23 +2,22 @@ const { GoogleGenAI } = require("@google/genai");
 const Service = require("../models/Service");
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-const MODEL = "gemini-3.6-flash";
+
+// Tried in order: if one is busy, the next one gets a go
+const MODELS = ["gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-2.5-flash"];
 
 const createBrief = async (req, res) => {
   try {
+    // 1. Get the client's description
     const { description } = req.body;
 
-    // 1. Pull description out of req.body
-    if (!description) {
-      return res.status(400).json({ message: "Tell us a bit more about your project" });
-    }
-    // 2. If it's missing or shorter than 10 characters, send 400
+    // 2. Make sure there's enough to work with
     if (!description || description.trim().length < 10) {
       return res.status(400).json({ message: "Tell us a bit more about your project" });
     }
 
     // Give the AI the real service list, so it can only pick services you offer
-    const services = await Service.find().select("name category turnaround description");
+    const services = await Service.find().select("name category turnaround description priceMin priceMax");
     const list = services
       .map((s) => `- ${s.name} (${s.category}, ${s.turnaround}): ${s.description}`)
       .join("\n");
@@ -45,22 +44,39 @@ Reply ONLY with JSON in this shape:
 
 Client description: """${description}"""`;
 
-    const result = await ai.models.generateContent({
-      model: MODEL,
-      contents: prompt,
-      config: { responseMimeType: "application/json" },
-    });
+    // Try each model until one answers
+    let result;
+    let lastErr;
+    for (const model of MODELS) {
+      try {
+        result = await ai.models.generateContent({
+          model,
+          contents: prompt,
+          config: { responseMimeType: "application/json" },
+        });
+        break; // it worked, stop trying
+      } catch (e) {
+        lastErr = e;
+        console.error(`${model} failed, trying next...`);
+      }
+    }
+    if (!result) throw lastErr; // every model failed, so send the friendly 503
+
     const data = JSON.parse(result.text);
 
-    // 3. Find the matching service in your list
+    // 3. Match the AI's pick to a real service
     const match = services.find((s) =>
-  (data.service || "").toLowerCase().startsWith(s.name.toLowerCase())
-);
-    //    (hint: services.find((s) => s.name === data.service))
+      (data.service || "").toLowerCase().startsWith(s.name.toLowerCase())
+    );
 
-    // 4. Send back everything the AI gave, plus that service's _id
-    res.json({ ...data, service: match ? match.name : data.service, serviceId: match ? match._id : null });
-    //    (hint: res.json({ ...data, serviceId: match ? match._id : null }))
+    // 4. Send it all back, with the real ID and prices from the database
+    res.json({
+      ...data,
+      service: match ? match.name : data.service,
+      serviceId: match ? match._id : null,
+      priceMin: match ? match.priceMin : null,
+      priceMax: match ? match.priceMax : null,
+    });
   } catch (err) {
     console.error("AI error:", err.message);
     res.status(503).json({ message: "The AI assistant is busy right now. You can still book without a brief." });
