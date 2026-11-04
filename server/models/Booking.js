@@ -29,9 +29,13 @@ const bookingSchema = new mongoose.Schema(
       enum: ["standard", "quick cut"],
       default: "standard",
     },
-    // 5. brief
+        // 5. brief: the AI-written brief, same shape the AI returns
     brief: {
-      type: String,
+      goal: String,
+      footage: String,
+      tone: String,
+      deliverables: String,
+      length: String,
     },
     // 6. status
     status: {
