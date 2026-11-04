@@ -1,0 +1,10 @@
+.nav { display: flex; align-items: center; gap: 22px; padding: 14px 24px;
+  border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.logo { font: 24px var(--display); letter-spacing: 1px; margin-right: auto; white-space: nowrap; }
+.logo i { font-style: normal; color: var(--c); }
+.clap { display: inline-block; width: 22px; height: 16px; border: 2px solid var(--c);
+  border-top: 5px solid var(--m); vertical-align: -2px; margin-right: 6px; }
+.links { display: flex; gap: 20px; flex-wrap: wrap; }
+.links a { font: 700 14px var(--label); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.links a:hover { color: var(--text); }
+.links a.active { color: var(--c); border-bottom: 2px solid var(--c); padding-bottom: 3px; }
