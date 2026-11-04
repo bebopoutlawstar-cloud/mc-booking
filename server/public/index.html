@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MC Productions Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0614;--card:#140c26;--empty:#1b1033;--line:#2c1d52;--text:#f7f4ff;--muted:#cfc8e6;--c:#00e5ff;--m:#ff2bd6;--y:#ffcc4d}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font-family:Barlow,system-ui,sans-serif}
+nav{display:flex;align-items:center;gap:18px;padding:14px 24px;border-bottom:1px solid var(--line)}
+nav b{font:24px Anton,Impact,sans-serif;letter-spacing:1px;margin-right:auto}
+nav b i{font-style:normal;color:var(--c)}
+#who{font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+main{max-width:1100px;margin:0 auto;padding:24px;display:grid;gap:28px}
+h1{font:42px Anton,Impact,sans-serif;line-height:1}
+h2{font:26px Anton,Impact,sans-serif;letter-spacing:.5px;margin-bottom:12px}
+.k{font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:2px;color:var(--m);text-transform:uppercase}
+p,.muted{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{background:none;border:1px solid var(--line);color:var(--muted);font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;cursor:pointer}
+.chip.on{border-color:var(--c);color:var(--c)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);padding:14px}
+.meta{font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:1px;color:var(--c);text-transform:uppercase}
+.card h3{font:700 17px Barlow,sans-serif;margin:4px 0}
+.card p{font-size:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.row{grid-template-columns:1fr}}
+label{display:block;font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--c);margin:10px 0 5px}
+input,select{width:100%;background:var(--empty);border:1px solid var(--line);color:var(--text);padding:9px 10px;font:15px Barlow,sans-serif}
+input:focus,select:focus{outline:none;border-color:var(--c)}
+button.btn{margin-top:14px;border:0;background:var(--c);color:var(--bg);font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:10px 18px;cursor:pointer}
+button.btn.m{background:var(--m)}
+.msg{margin-top:10px;font-weight:600;min-height:1.3em}
+.msg.err{color:var(--m)}.msg.ok{color:var(--c)}
+.bk{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.pill{font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;padding:2px 8px;text-transform:uppercase}
+.pending{background:#3a2a00;color:var(--y)}.confirmed{background:#003a3f;color:var(--c)}.declined{background:#3f0a33;color:var(--m)}.cancelled{background:#262033;color:#9a93b3}
+.small{background:none;border:1.5px solid var(--m);color:var(--m);font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;padding:4px 8px;cursor:pointer}
+</style>
+</head>
+<body>
+<nav><b>MC <i>PRODUCTIONS</i></b><span id="who">Not logged in</span></nav>
+<main>
+  <section>
+    <div class="k">Video editing · Filming · Design</div>
+    <h1>BOOK YOUR NEXT EDIT</h1>
+    <p style="margin-top:8px">Live demo running on the real Express + MongoDB API.</p>
+  </section>
+
+  <section>
+    <h2>SERVICES</h2>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="services"></div>
+  </section>
+
+  <section class="row">
+    <div class="card">
+      <h2>LOG IN</h2>
+      <form id="loginForm">
+        <label for="email">Email</label><input id="email" value="test@mcbooking.com">
+        <label for="password">Password</label><input id="password" type="password" value="test1234">
+        <button class="btn" type="submit">Log in</button>
+        <div class="msg" id="loginMsg"></div>
+      </form>
+    </div>
+    <div class="card">
+      <h2>BOOK A CHAT</h2>
+      <form id="bookForm">
+        <label for="svc">Service</label><select id="svc"></select>
+        <label for="pkg">Package</label>
+        <select id="pkg"><option value="standard">Standard · 2 rounds</option><option value="quick cut">Quick Cut · 1 round</option></select>
+        <label for="when">Date and time</label><input id="when" type="datetime-local">
+        <button class="btn m" type="submit">Book a chat</button>
+        <div class="msg" id="bookMsg"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>MY BOOKINGS</h2>
+    <div id="mine"><p>Log in to see your bookings.</p></div>
+  </section>
+</main>
+
+<script>
+const API = "/api";
+let token = null, allServices = [], filter = "All";
+
+async function api(path, opts = {}) {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers.Authorization = "Bearer " + token;
+  const res = await fetch(API + path, { ...opts, headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.message || "Request failed");
+  return data;
+}
+
+function renderServices() {
+  const cats = ["All", ...new Set(allServices.map(s => s.category))];
+  document.getElementById("chips").innerHTML = cats.map(c =>
+    `<button class="chip ${c === filter ? "on" : ""}" data-c="${c}">${c}</button>`).join("");
+  const list = filter === "All" ? allServices : allServices.filter(s => s.category === filter);
+  document.getElementById("services").innerHTML = list.map(s =>
+    `<div class="card"><div class="meta">${s.category} · ${s.turnaround}</div><h3>${s.name}</h3><p>${s.description}</p></div>`).join("");
+}
+
+document.getElementById("chips").addEventListener("click", e => {
+  if (e.target.dataset.c) { filter = e.target.dataset.c; renderServices(); }
+});
+
+async function loadServices() {
+  allServices = await api("/services");
+  renderServices();
+  document.getElementById("svc").innerHTML = allServices.map(s => `<option value="${s._id}">${s.name}</option>`).join("");
+}
+
+async function loadMine() {
+  const box = document.getElementById("mine");
+  const list = await api("/bookings/mine");
+  if (!list.length) { box.innerHTML = "<p>No bookings yet.</p>"; return; }
+  box.innerHTML = list.map(b => `
+    <div class="bk">
+      <div><b>${b.service ? b.service.name : "Service"}</b>
+        <div class="muted">${new Date(b.dateTime).toLocaleString()} · ${b.package}</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="pill ${b.status}">${b.status}</span>
+        ${["pending","confirmed"].includes(b.status) ? `<button class="small" data-cancel="${b._id}">Cancel</button>` : ""}
+      </div>
+    </div>`).join("");
+}
+
+document.getElementById("mine").addEventListener("click", async e => {
+  const id = e.target.dataset.cancel;
+  if (!id) return;
+  try { await api(`/bookings/${id}/cancel`, { method: "PATCH" }); loadMine(); }
+  catch (err) { alert(err.message); }
+});
+
+document.getElementById("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = document.getElementById("loginMsg");
+  try {
+    const data = await api("/auth/login", { method: "POST", body: JSON.stringify({
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value }) });
+    token = data.token;
+    document.getElementById("who").textContent = "Hi, " + data.user.name;
+    msg.className = "msg ok"; msg.textContent = "Logged in.";
+    loadMine();
+  } catch (err) { msg.className = "msg err"; msg.textContent = err.message; }
+});
+
+document.getElementById("bookForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const msg = document.getElementById("bookMsg");
+  const when = document.getElementById("when").value;
+  try {
+    await api("/bookings", { method: "POST", body: JSON.stringify({
+      service: document.getElementById("svc").value,
+      package: document.getElementById("pkg").value,
+      dateTime: when ? new Date(when).toISOString() : "" }) });
+    msg.className = "msg ok"; msg.textContent = "Request sent: Pending.";
+    loadMine();
+  } catch (err) { msg.className = "msg err"; msg.textContent = err.message; }
+});
+
+loadServices();
+</script>
+</body>
+</html>
