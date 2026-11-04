@@ -1,0 +1,22 @@
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: center; }
+.hero h1 { margin: 8px 0 12px; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.browse { display: inline-block; margin-top: 12px; font: 700 14px var(--label); letter-spacing: 1.5px; color: var(--c); text-transform: uppercase; }
+.reel-box { aspect-ratio: 16/9; background: var(--empty); border: 1px dashed var(--line); display: grid; place-items: center;
+  font: 700 14px var(--label); letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+.small { font-size: 13.5px; margin-top: 6px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+.step { border-top: 3px solid var(--c); }
+.step.ai-step { border-top-color: var(--m); }
+.step b { display: block; font: 700 14px var(--label); letter-spacing: 1px; text-transform: uppercase; color: var(--c); margin-bottom: 4px; }
+.step.ai-step b { color: var(--m); }
+.bottom { display: grid; grid-template-columns: 1fr 280px; gap: 16px; align-items: start; }
+.row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.row-head .browse { margin-top: 0; }
+.featured { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.meta { font: 700 12px var(--label); letter-spacing: 1px; color: var(--c); text-transform: uppercase; }
+.featured h3 { font: 700 17px var(--body); margin: 4px 0; }
+.why { border-left: 3px solid var(--m); }
+@media (max-width: 800px) {
+  .hero, .bottom, .steps, .featured { grid-template-columns: 1fr; }
+}
