@@ -1,0 +1,12 @@
+.svc-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.search { background: var(--empty); border: 1px solid var(--line); color: var(--text); padding: 10px 12px;
+  font: 15px var(--body); width: 280px; max-width: 100%; }
+.search:focus { outline: none; border-color: var(--c); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: none; border: 1px solid var(--line); color: var(--muted); cursor: pointer;
+  font: 700 12px var(--label); letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 10px; }
+.chip.on { border-color: var(--c); color: var(--c); }
+.svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.svc-grid h3 { font: 700 17px var(--body); margin: 4px 0; }
+.small-btn { margin-top: 10px; padding: 6px 12px; font-size: 13px; }
+.link { background: none; border: 0; color: var(--c); cursor: pointer; font: inherit; text-decoration: underline; }

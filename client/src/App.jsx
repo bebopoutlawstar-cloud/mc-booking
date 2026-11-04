@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Services from "./pages/Services";
 
 function Placeholder({ name }) {
   return <main className="page"><h1>{name}</h1></main>;
@@ -10,6 +11,7 @@ export default function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path="/services" element={<Services />} />
         <Route path="/" element={<Placeholder name="HOME" />} />
         <Route path="/services" element={<Placeholder name="SERVICES" />} />
         <Route path="/login" element={<Placeholder name="LOG IN" />} />
