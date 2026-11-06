@@ -17,11 +17,13 @@ export function AuthProvider({ children }) {
       .finally(() => setChecking(false));
   }, []);
 
-  // Saves the token and user after a successful login or register
+  // Saves the token and user after a successful login or register,
+  // and hands the user back so the Login page knows where to go next
   function saveSession(data) {
     localStorage.setItem("token", data.token);
     setToken(data.token);
     setUser(data.user);
+    return data.user;
   }
 
   async function login(email, password) {
@@ -32,7 +34,7 @@ export function AuthProvider({ children }) {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message);
-    saveSession(data);
+    return saveSession(data);
   }
 
   async function register(name, email, password) {
@@ -43,7 +45,7 @@ export function AuthProvider({ children }) {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message);
-    saveSession(data);
+    return saveSession(data);
   }
 
   function logout() {

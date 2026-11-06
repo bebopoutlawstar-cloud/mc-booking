@@ -5,10 +5,20 @@
 .clap { display: inline-block; width: 22px; height: 16px; border: 2px solid var(--c);
   border-top: 5px solid var(--m); vertical-align: -2px; margin-right: 6px; }
 .links { display: flex; gap: 20px; flex-wrap: wrap; }
-.links a { font: 700 14px var(--label); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.links a { font: 700 14px var(--label); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); text-decoration: none; }
 .links a:hover { color: var(--text); }
 .links a.active { color: var(--c); border-bottom: 2px solid var(--c); padding-bottom: 3px; }
-.signed-in { display: flex; align-items: center; gap: 12px; }
+
+.signed-in { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .hi { font: 700 13px var(--label); letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; }
-.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 6px; box-shadow: 0 0 6px var(--c); }
-.links a { text-decoration: none; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c);
+  margin-right: 6px; box-shadow: 0 0 6px var(--c); }
+
+/* Phones: logo and button on top, links on their own row underneath */
+@media (max-width: 700px) {
+  .nav { padding: 12px 16px; gap: 10px 14px; }
+  .logo { font-size: 20px; }
+  .links { order: 3; width: 100%; gap: 14px; }
+  .links a { font-size: 13px; }
+  .hi { display: none; }
+}
