@@ -1,0 +1,14 @@
+.next { border-left: 3px solid var(--c); }
+.list { display: grid; gap: 10px; }
+.row-main { display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center; }
+.row-btns { display: flex; gap: 10px; align-items: center; }
+.pill { font: 700 12px var(--label); letter-spacing: 1.5px; padding: 3px 10px; text-transform: uppercase; }
+.pill.pending { background: #3a2a00; color: var(--y); }
+.pill.confirmed { background: #003a3f; color: var(--c); }
+.pill.declined { background: #3f0a33; color: var(--m); }
+.pill.cancelled { background: #262033; color: #9a93b3; }
+.danger { border-color: var(--m); color: var(--m); }
+.brief-view { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.brief-view b { color: var(--c); text-transform: capitalize; }
+.empty { display: grid; gap: 10px; }
+@media (max-width: 640px) { .row-main { grid-template-columns: 1fr; } }

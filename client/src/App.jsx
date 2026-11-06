@@ -6,6 +6,8 @@ import Services from "./pages/Services";
 import ServiceDetails from "./pages/ServiceDetails";
 import Login from "./pages/Login";
 import Brief from "./pages/Brief";
+import Book from "./pages/Book";
+import MyBookings from "./pages/MyBookings";
 
 function Placeholder({ name }) {
   return <main className="page"><h1>{name}</h1></main>;
@@ -23,8 +25,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Login />} />
           <Route path="/brief" element={<Brief />} />
-          <Route path="/book" element={<Placeholder name="BOOK A CHAT" />} />
-          <Route path="/bookings" element={<Placeholder name="MY BOOKINGS" />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/bookings" element={<MyBookings />} />
           <Route path="/admin" element={<Placeholder name="ADMIN" />} />
         </Routes>
       </BrowserRouter>

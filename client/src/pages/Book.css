@@ -1,0 +1,6 @@
+.book-page { max-width: 700px; }
+.book-form { display: grid; gap: 8px; }
+.book-form .btn { margin-top: 10px; }
+.attached { border-left: 3px solid var(--m); background: var(--bg); }
+.success { display: grid; gap: 10px; justify-items: start; }
+.pending { color: var(--y); }
