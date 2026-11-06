@@ -1,0 +1,12 @@
+.login-page { justify-items: center; }
+.login-card { width: 100%; max-width: 400px; display: grid; gap: 6px; padding: 22px; }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 10px; }
+.tabs button { background: none; border: 0; border-bottom: 2px solid var(--line); color: var(--muted); padding: 10px;
+  font: 700 15px var(--label); letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; }
+.tabs button.on { color: var(--c); border-bottom-color: var(--c); }
+label { font: 700 12px var(--label); letter-spacing: 1.5px; text-transform: uppercase; color: var(--c); margin-top: 8px; }
+input, select, textarea { background: var(--empty); border: 1px solid var(--line); color: var(--text); padding: 10px 12px; font: 15px var(--body); width: 100%; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--c); }
+.error { color: var(--m); font-weight: 600; font-size: 14px; }
+.login-card .btn { margin-top: 12px; }
+.btn:disabled { opacity: .6; cursor: wait; }

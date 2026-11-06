@@ -1,0 +1,11 @@
+.details { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; align-items: start; }
+.details h1 { margin: 6px 0 12px; }
+.facts { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.facts .card { padding: 8px 12px; min-width: 130px; }
+.packages { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; }
+.pkg { text-align: left; cursor: pointer; color: var(--text); font: inherit; display: grid; gap: 4px; }
+.pkg b { font: 700 14px var(--label); letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.pkg span { color: var(--muted); font-size: 13.5px; }
+.pkg.on { border-color: var(--c); }
+.pkg.on b { color: var(--c); }
+@media (max-width: 800px) { .details, .packages { grid-template-columns: 1fr; } }

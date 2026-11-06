@@ -8,3 +8,7 @@
 .links a { font: 700 14px var(--label); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
 .links a:hover { color: var(--text); }
 .links a.active { color: var(--c); border-bottom: 2px solid var(--c); padding-bottom: 3px; }
+.signed-in { display: flex; align-items: center; gap: 12px; }
+.hi { font: 700 13px var(--label); letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 6px; box-shadow: 0 0 6px var(--c); }
+.links a { text-decoration: none; }

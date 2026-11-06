@@ -1,0 +1,13 @@
+.brief-page { max-width: 820px; }
+.brief-page form { display: grid; gap: 8px; }
+textarea { resize: vertical; }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; }
+.examples .chip { text-transform: none; letter-spacing: 0; font: 600 13px var(--body); text-align: left; }
+.result { border-left: 3px solid var(--m); display: grid; gap: 8px; }
+.result h2 { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.price { font: 700 18px var(--label); color: var(--c); letter-spacing: 1px; }
+.follow { color: var(--m); font-weight: 600; }
+.brief-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+.brief-grid label { text-transform: capitalize; }
+.fail { display: grid; gap: 10px; justify-items: start; }
+@media (max-width: 700px) { .brief-grid { grid-template-columns: 1fr; } }

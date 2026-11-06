@@ -1,6 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 import Services from "./pages/Services";
+import ServiceDetails from "./pages/ServiceDetails";
+import Login from "./pages/Login";
+import Brief from "./pages/Brief";
 
 function Placeholder({ name }) {
   return <main className="page"><h1>{name}</h1></main>;
@@ -8,18 +13,21 @@ function Placeholder({ name }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/services" element={<Services />} />
-        <Route path="/" element={<Placeholder name="HOME" />} />
-        <Route path="/services" element={<Placeholder name="SERVICES" />} />
-        <Route path="/login" element={<Placeholder name="LOG IN" />} />
-        <Route path="/brief" element={<Placeholder name="AI BRIEF" />} />
-        <Route path="/book" element={<Placeholder name="BOOK A CHAT" />} />
-        <Route path="/bookings" element={<Placeholder name="MY BOOKINGS" />} />
-        <Route path="/admin" element={<Placeholder name="ADMIN" />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/:id" element={<ServiceDetails />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Login />} />
+          <Route path="/brief" element={<Brief />} />
+          <Route path="/book" element={<Placeholder name="BOOK A CHAT" />} />
+          <Route path="/bookings" element={<Placeholder name="MY BOOKINGS" />} />
+          <Route path="/admin" element={<Placeholder name="ADMIN" />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
