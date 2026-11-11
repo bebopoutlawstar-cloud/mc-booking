@@ -19,4 +19,4 @@
 .why { border-left: 3px solid var(--m); }
 @media (max-width: 800px) {
   .hero, .bottom, .steps, .featured { grid-template-columns: 1fr; }
-}
+}.reel-box iframe { width: 100%; height: 100%; border: 0; }

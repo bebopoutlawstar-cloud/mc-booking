@@ -35,8 +35,16 @@ export default function Home() {
           </div>
           <Link to="/services" className="browse">Browse all services →</Link>
         </div>
-        <div className="reel">
-          <div className="reel-box">▶ Showreel</div>
+                <div className="reel">
+          <div className="reel-box">
+            <iframe
+              src="https://drive.google.com/file/d/1ib0tX_JPt7zkwXPcoQCsoh54N4i0VkGf/preview"
+              title="MC Productions editing reel"
+              allow="autoplay; fullscreen"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
           <p className="small">Acting reels · trailers · weddings · gaming</p>
         </div>
       </section>
